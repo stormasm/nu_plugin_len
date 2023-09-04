@@ -24,10 +24,7 @@ impl Plugin for Len {
     ) -> Result<Value, LabeledError> {
         assert_eq!(name, "len");
         match input {
-            Value::String { val, span } => Ok(Value::Int {
-                val: val.len() as i64,
-                span: span.clone(),
-            }),
+            Value::String { val, .. } => Ok(Value::int(val.len() as i64, call.head)),
             _ => Err(LabeledError {
                 label: "Expected String input from pipeline".to_string(),
                 msg: format!("requires string input; got {}", input.get_type()),
